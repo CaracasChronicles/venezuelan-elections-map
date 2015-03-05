@@ -29,7 +29,7 @@ bower install
 grunt
 ```
 
-To host the project locally for development, simply run ```grunt server``` then point your browser to http://localhost:4660/.  Live reload is enabled, meaning any modifications made to source files will cause grunt to rebuild dependencies and reload the page automatically to reflect new changes.
+To run the built-in webserver locally, simply run ```grunt server``` then point your browser to [http://localhost:4660/](http://localhost:4660/) to see the map.  Live reload is enabled, meaning any modifications made to source files while the webserver is running will trigger Grunt to rebuild dependencies and reload the page automatically to reflect new changes.
 
 ### Credits
 
