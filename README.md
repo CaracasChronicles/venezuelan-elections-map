@@ -16,7 +16,7 @@ git clone https://github.com/cjfont/venezuelan-elections-map.git
 
 You must then edit the ```settings.json``` file and enter your own Google API key in order to access Google Maps.  Instructions on how to generate your own API key can be found on [this section of the Google Maps API documentation](https://developers.google.com/maps/documentation/javascript/tutorial#api_key).  You may optionally provide a tracking ID if you intend to use Google Analytics.
 
-After editing the ```settings.json``` file, if you intend to commit changes to the project and push them elsewhere, you may want to tell git not include the changes you made to ```settings.json``` with this command:
+After editing the ```settings.json``` file, if you intend to commit changes to the project and push them elsewhere, you may want to tell git not to include the changes you made to ```settings.json``` with this command:
 ```
 git update-index --assume-unchanged settings.json
 ```
