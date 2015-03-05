@@ -1,0 +1,26 @@
+{
+  "name": "venezuelan-elections-map",
+  "version": "0.2.0",
+  "description": "Browse local returns for all Venezuelan elections since 1998",
+  "bugs": "https://github.com/cjfont/venezuelan-elections-map/issues",
+  "contributors": [
+    {
+      "name": "Dorothy Kronick",
+      "url": "http://dorothykronick.com"
+    },
+    {
+      "name": "Christian Font",
+      "url": "https://github.com/cjfont"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-bower-concat": "~0.4.0",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-connect": "^0.9.0",
+    "grunt-contrib-uglify": "~0.7.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-minjson": "~0.1.1",
+    "grunt-replace": "~0.8.0"
+  }
+}

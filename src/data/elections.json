@@ -1,0 +1,86 @@
+{
+  "pr98": {
+    "prev": null,
+    "label": "1998 Presidential Election",
+    "vtype": "Pro-Chávez",
+    "desc": "Hugo Chávez elected president with 56% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_presidential_election,_1998'>Wikipedia</a>, <a href='http://www.nytimes.com/1998/12/07/world/venezuelans-elect-an-ex-coup-leader-as-their-president.html?scp=2&amp;sq=chavez&st=nyt'>NY Times</a><br />\n<br />\n\"Pro-Chávez\" defined as:<br />\n<i>(votes for Chávez) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/1998'>ESDATA spreadsheet</a>:<br />\n<i>(votos_oficialismo) / (votos_oficialismo + votos_oposición)</i>"
+  },
+  "rf99": {
+    "prev": "pr98",
+    "label": "1999 Constitutional Referendum",
+    "vtype": "Voted \"Yes\"",
+    "desc": "Chávez's proposal to convene a constitutional convention approved with 88% of the vote; proposed powers of the convention approved with 82% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_constitutional_referendum,_December_1999'>Wikipedia</a>, <a href='http://www.nytimes.com/1999/12/16/world/venezuelans-give-chavez-all-the-powers-he-wanted.html?scp=3&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Yes\" defined as:<br />\n<i>(sum of \"yes\" votes cast for questions one and two) / (sum of valid votes cast for questions one and two)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/static/constituyente_1999'>ESDATA spreadsheet</a>:<br />\n<i>(votos_si_pgta_1 + votos_si_pgta_2) / (votos_si_pgta_1 + votos_no_pgta_1 + votos_si_pgta_2 + votos_no_pgta_2)</i>"
+  },
+  "pr00": {
+    "prev": "rf99",
+    "label": "2000 Presidential Election",
+    "vtype": "Pro-Gov't",
+    "desc": "Hugo Chávez reelected with 60% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_presidential_election,_2000'>Wikipedia</a>, <a href='http://www.nytimes.com/2000/07/31/world/officials-say-chavez-wins-in-venezuela.html?scp=8&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Pro-Gov't\" defined as:<br />\n<i>(votes for Chávez) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2000'>ESDATA spreadsheet</a>:<br />\n<i>(chávez) / (chávez + arias + claudio)</i>"
+  },
+  "rg04": {
+    "prev": "pr00",
+    "label": "2004 Regional Elections",
+    "vtype": "Pro-Gov't",
+    "desc": "Pro-Chávez candidates won governorships in 21 of 22 contested states.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_regional_elections,_2004'>Wikipedia</a>, <a href='http://www.nytimes.com/2004/11/01/international/americas/01venez.html?scp=12&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Pro-Gov't\" defined as:<br />\n<i>(votes for MVR, Podemos, PPT and PCV) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/regionales_2004'>ESDATA spreadsheet</a>: <br />\n<i>(votos_oficialismo) / (votos_oficialismo + votos_oposicion)</i>"
+  },
+  "rc04": {
+    "prev": "rg04",
+    "label": "2004 Recall Referendum",
+    "vtype": "Voted \"Yes\"",
+    "desc": "Initiative to recall Chávez defeated with 59% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_recall_referendum,_2004'>Wikipedia</a>, <a href='http://www.nytimes.com/2004/08/17/world/venezuela-votes-by-large-margin-to-retain-chavez.html?scp=3&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Pro-Gov't\" defined as:<br />\n<i>(votes cast against revoking Chávez’s mandate) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2004'>ESDATA spreadsheet</a>:<br />\n<i>rrp_no / (rrp_no + rrp_si)</i>"
+  },
+  "pr06": {
+    "prev": "rc04",
+    "label": "2006 Presidential Election",
+    "vtype": "Pro-Gov't",
+    "desc": "Hugo Chávez reelected with 63% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_presidential_election,_2006'>Wikipedia</a>, <a href='http://www.nytimes.com/2006/12/04/world/americas/04venezuela.html?scp=11&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Pro-Gov't\" defined as:<br />\n<i>(votes for Chávez) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2006'>ESDATA spreadsheet</a>:<br />\n<i>(votos_oficialismo) / (votos_chávez + votos_rosales)</i>"
+  },
+  "rf07": {
+    "prev": "pr06",
+    "label": "2007 Constitutional Referendum",
+    "vtype": "Voted \"Yes\"",
+    "desc": "Chávez's proposed constitutional amendments defeated with 51% of the vote in opposition.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_constitutional_referendum,_2007'>Wikipedia</a>, <a href='http://www.nytimes.com/2007/12/03/world/americas/03venezuela.html?scp=18&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Yes\" defined as:<br />\n<i>(votes cast in favor of reform) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2007'>ESDATA spreadsheet</a>:<br />\n<i>(votos_A_si + votos_A_no) / (votos_A_si + votos_A_no + votos_B_si + votos_B_no)</i>"
+  },
+  "rg08": {
+    "prev": "rf07",
+    "label": "2008 Regional Elections",
+    "vtype": "Pro-Gov't",
+    "desc": "Pro-Chávez candidates won 18 of 22 governorships and the mayorality of the Caracas, with approximately 55% of the national vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_regional_elections,_2008'>Wikipedia</a>, <a href='http://www.nytimes.com/2008/11/24/world/americas/24venez.html?scp=7&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\nResults shown are for gubernatorial elections only.<br />\n<br />\n\"Pro-Gov't\" defined as: <br />\n<i>(votes for Polo Patriótico candidates) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2008'>ESDATA spreadsheet</a>:<br />\nVaries by state; details available upon request."
+  },
+  "rf09": {
+    "prev": "rg08",
+    "label": "2009 Constitutional Referendum",
+    "vtype": "Voted \"Yes\"",
+    "desc": "Chávez's proposed constitutional amendments approved with 55% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_constitutional_referendum,_2009'>Wikipedia</a>, <a href='http://www.nytimes.com/2009/02/16/world/americas/16venez.html?scp=12&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Yes\" defined as: <br />\n<i>(\"yes\" votes) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2009'>ESDATA spreadsheet</a>:<br />\n<i>(votos_si) / (votos_si + votos_no)</i>"
+  },
+  "pm10": {
+    "prev": "rf09",
+    "label": "2010 Parliamentary Elections",
+    "vtype": "Pro-Gov't",
+    "subs": [
+      ["Majoritarian Voting", "_nom"],
+      ["Proportional Representation", "_lst"]
+    ],
+    "disabled": true,
+    "desc": "Pro-Chávez candidates won 98 of 165 seats in the national assembly with 49% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_parliamentary_election,_2010'>Wikipedia</a>, <a href='http://www.nytimes.com/2010/09/28/world/americas/28venez.html?scp=14&sq=venezuela&st=nyt'>NY Times</a><br />\n<br />\n\"Pro-Gov't\" defined as: <br />\n<i>(votes for PSUV candidates) / (votes for PSUV candidates + votes for MUD candidates)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2010'>ESDATA spreadsheet</a>: <i>(chavez) / (votos_validos)</i><br />\n<br />\n<b>Note:</b> votes for PPT candidates dropped."
+  },
+  "pr11": {
+    "prev": "pm10",
+    "label": "2011 Primary Elections",
+    "vtype": "Pro-Capriles",
+    "desc": "Henrique Capriles won the opposition primary with 64.2% of the 3,059,024 votes cast.<br />\n<br />\n",
+    "scale_type": "sequential",
+  },
+  "pr12": {
+    "prev": null,
+    "label": "2012 Presidential Election",
+    "vtype": "Pro-Chávez",
+    "desc": "Hugo Chávez reelected with 54% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_presidential_election,_2012'>Wikipedia</a>, <a href='http://www.nytimes.com/2012/10/08/world/americas/venezuela-presidential-election.html'>NY Times</a><br />\n<br />\n\"Pro-Chávez\" defined as:<br />\n<i>(votes for Chávez) / (valid votes cast)</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2012'>ESDATA spreadsheet</a>: <i>(chavez) / (votos_validos)</i><br />\n<br />\n"
+  },
+  "pr13": {
+    "prev": null,
+    "label": "2013 Presidential Election",
+    "vtype": "Pro-Maduro",
+    "desc": "Nicolás Maduro elected president with 50.78% of the vote.<br />\n<br />\nLinks: <a href='http://en.wikipedia.org/wiki/Venezuelan_presidential_election,_2013'>Wikipedia</a>, <a href='http://www.nytimes.com/2013/04/15/world/americas/venezuelans-vote-for-successor-to-chavez.html?pagewanted=all'>NY Times</a><br />\n<br />\n\"Pro-Maduro\" defined as:<br />\n<i>(votes for Maduro) / (valid votes cast)</i><br />\n<br />\n\"Turnout\" defined as:<br />\n<i>(votes cast) / (counted voters (votantes escrutados))</i><br />\n<br />\nIn terms of variables in <a href='http://esdata.info/2013'>ESDATA spreadsheet</a>: <i>(maduro) / (votos_validos)</i><br />\n<br />\n"
+  }
+}

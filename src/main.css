@@ -1,0 +1,154 @@
+html, body, #map-canvas, svg {
+    width: 100%; 
+    height: 100%; 
+    margin: 0; 
+    padding: 0;
+}
+
+#top-glass {
+    pointer-events: none;
+}
+
+#top-glass .menu {
+    pointer-events: all;
+}
+
+.title-text {
+    font-family: arial;
+}
+
+#title-bg {
+    fill: white;
+    fill-opacity: 1.0;
+    stroke: #6D7276;
+    stroke-width: 1.0;
+}
+
+.menu .option rect {
+    cursor: pointer;
+}
+
+.menu .option rect:hover {
+    fill: #FFF8CB;
+}
+
+.menu .option.disabled rect {
+    cursor: default;
+    fill: #ccc;
+}
+.menu .option.disabled text {
+    fill: #666;
+}
+
+.menu .option text {
+    pointer-events: none;
+    text-anchor: start;
+    cursor: pointer;
+    fill: black;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+/* Election selector */
+
+.elecsel .option rect {
+    fill: #fff;
+    fill-opacity: 0.9;
+    stroke: #6D7276;
+    stroke-width: 1px;
+}
+
+.elecsel .option.selected rect {
+    fill: #FFE84D;
+}
+
+.elecsel .option.selected text {
+    font-weight: bold;
+}
+
+/* Map division selector */
+
+.divsel .option rect {
+    fill: #D0DCE7;
+    fill-opacity: 0.9;
+    stroke: #789;
+    stroke-width: 1px;
+}
+
+.divsel .option text {
+    pointer-events: none;
+    text-anchor: start;
+    fill: black;
+    font-family: arial;
+    font-size: 10px;
+}
+
+.divsel .option.selected rect {
+    fill: #325594;
+}
+
+.divsel .option.selected text {
+    fill: white;
+}
+
+/* Tooltip */
+
+#description {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.85);
+    border:1px solid #777;
+    padding: 5px;
+    font-family: tahoma;
+    font-size: 14px;
+    overflow: auto;
+}
+
+#source {
+    position: absolute;
+    background-color: #D0DCE7;
+    border:1px solid #777;
+    padding: 5px;
+    font-family: tahoma;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    line-height:10px;
+}
+
+.tooltip table {
+    margin: 0px;
+}
+
+.tooltip table th, .tooltip table td {
+    vertical-align: top;
+    line-height: 18px;
+}
+
+.tooltip table th {
+    background-color: #eee;
+    padding: 1px 4px 1px 6px;
+    color: #222;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: right;
+    border: 1px solid #ccc;
+}
+
+.tooltip table td {
+    background-color:#f5f5f5;
+    padding: 3px 6px 0px 6px;
+    font-family: arial;
+    font-size: 14px;
+}
+
+/* Legend */
+
+.legend .tick2 {
+    text-anchor: left;
+    font-size: 10px;
+    font-family: sans-serif;
+}
+
+.legend .tick2.extra {
+    font-size: 8px;
+}
