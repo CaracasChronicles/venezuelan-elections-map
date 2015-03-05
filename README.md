@@ -3,7 +3,7 @@
 Source code of interactive map to browse local returns for all Venezuelan elections since 1998:
 http://stanford.edu/~dkronick/vzmap
 
-*(screenshot goes here)*
+![Screenshot of map](screenshot.png)
 
 ### Installation
 
@@ -28,6 +28,6 @@ To host the project locally for development, simply run ```grunt server``` then 
 
 ### Credits
 
-Site development by Christian Font; raw data from the Venezuelan electoral council (CNE) via [ESDATA](http://esdata.info/); data processing by [Dorothy Kronick](http://dorothykronick.com/). Thanks to Stanford University's Community Engagement Grant for funding and to Javier Rodríguez Rivas for research assistance. 
+Site development by Christian Font; raw data from the Venezuelan electoral council (CNE) via [ESDATA](http://esdata.info/); data processing by [Dorothy Kronick](http://dorothykronick.com/). Thanks to Stanford University's Community Engagement Grant for funding and to Javier RodrÃ­guez Rivas for research assistance. 
 
 Additional credit goes to [D3.js](http://d3js.org/) and [Colorbrewer 2.0](http://colorbrewer2.org/).
