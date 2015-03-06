@@ -35,4 +35,4 @@ To run the built-in webserver locally, simply run ```grunt server``` then point 
 
 Site development by Christian Font; raw data from the Venezuelan electoral council (CNE) via [ESDATA](http://esdata.info/); data processing by [Dorothy Kronick](http://dorothykronick.com/). Thanks to Stanford University's Community Engagement Grant for funding and to Javier Rodríguez Rivas for research assistance. 
 
-Additional credit goes to [D3.js](http://d3js.org/) and [Colorbrewer 2.0](http://colorbrewer2.org/).
+Additional credit goes to Seth Yastrov for his python-fu, [D3.js](http://d3js.org/) and [Colorbrewer 2.0](http://colorbrewer2.org/).
