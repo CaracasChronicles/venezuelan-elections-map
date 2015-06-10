@@ -1,6 +1,5 @@
 {
   "name": "venezuelan-elections-map",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -9,6 +8,7 @@
   "dependencies": {
     "async": "~0.9.2",
     "d3": "~3.5.5",
-    "underscore": "~1.7.0"
-  }
+    "lodash": "~3.9.3"
+  },
+  "private": true
 }

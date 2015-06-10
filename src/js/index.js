@@ -81,7 +81,7 @@ google.maps.event.addDomListener(window, 'load', function() {
                 styles: [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#3178C8"},{"lightness":-25},{"saturation":-85}]}]
             });
             
-            map.data.addListener('addfeature', function(event) {
+            google.maps.event.addListener(map.data, 'addfeature', function(event) {
                 event.feature.setProperty('color', '#359');
             });            
 
@@ -111,6 +111,7 @@ google.maps.event.addDomListener(window, 'load', function() {
             var tooltip;
             
             function show_tooltip(event) {
+                if (!event || !event.feature) return;
                 var pos = overlay.getProjection().fromLatLngToContainerPixel(event.latLng);
                 var feat = event.feature;
                 if (tooltip) tooltip.remove();
@@ -138,7 +139,11 @@ google.maps.event.addDomListener(window, 'load', function() {
                 
                 if (selected_election) {
                     var elec_id = selected_election.id;
-                    tooltip.render(_.extend(event.feature.k, {
+                    var props = {};
+                    event.feature.forEachProperty(function(val, key) {
+                        props[key] = val;
+                    });
+                    tooltip.render(_.extend(props, {
                         numformat: d3.format(','), // format numbers with thousands commas
                         value: feat.getProperty(elec_id + "_c"),
                         rep_text: (elec_id == "pr12" || elec_id == "pr13" ? "Counted Voters<br> (<i>escrutados</i>)" : "Registered Voters"),
@@ -167,13 +172,17 @@ google.maps.event.addDomListener(window, 'load', function() {
                 }
             } 
 
-            map.data.addListener('mouseover', function(event) {
-                event.feature.setProperty('hover', true);
-                show_tooltip(event);
+            google.maps.event.addListener(map.data, 'mouseover', function(event) {
+                if (event && event.feature) {
+                    event.feature.setProperty('hover', true);
+                    show_tooltip(event);
+                }
             });
-            map.data.addListener('mouseout', function(event) {
-                event.feature.setProperty('hover', false);
-                tooltip.remove();
+            google.maps.event.addListener(map.data, 'mouseout', function(event) {
+                if (event && event.feature) {
+                    event.feature.setProperty('hover', false);
+                    if (tooltip) tooltip.remove();
+                }
             });
             map.addListener('dragstart', function(event) {
                 topglass.selectAll(".tooltip").remove();
