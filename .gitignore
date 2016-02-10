@@ -1,4 +1,6 @@
-node_modules
-bower_components
-dist
+node_modules/
+bower_components/
+dist/
 settings.json
+tmp/
+.DS_Store

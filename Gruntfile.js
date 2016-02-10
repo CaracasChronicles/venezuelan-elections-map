@@ -4,9 +4,9 @@ var path = require('path');
 module.exports = function(grunt) {
 
     var settings = grunt.file.readJSON('settings.json');
-    
+
     if (!settings || !settings.google_api_key) {
-        grunt.log.error("You must first set the 'google_api_key' property in settings.json in order to build project");
+        grunt.log.error("!!! ERROR: You must first set the 'google_api_key' property in settings.json in order to build project");
         return false;
     }
 
@@ -73,10 +73,10 @@ module.exports = function(grunt) {
                     'src/js/index.js'
                 ],
                 dest: 'dist/local.js'
-            } 
+            }
         },
         'minjson': {
-            appdata: {                
+            appdata: {
                 files: {
                     'dist/appdata.min.json': 'dist/appdata.json'
                 }
@@ -94,14 +94,14 @@ module.exports = function(grunt) {
             local: {
                 src: 'dist/local.js',
                 dest: 'dist/local.min.js'
-            }        
+            }
         },
         watch: {
             options: {
                 livereload: true,
                 livereloadOnError: false,
                 spawn: true
-            },                
+            },
             appdata: {
                 files: ["src/data/*.json"],
                 tasks: ['appdata']
@@ -120,12 +120,12 @@ module.exports = function(grunt) {
             options: {
               hostname: '*',
               port: 4660,
-              base: 'dist'            
+              base: 'dist'
             }
           }
         }
-    });    
-    
+    });
+
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -133,11 +133,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-concat');
     grunt.loadNpmTasks('grunt-minjson');
     grunt.loadNpmTasks('grunt-replace');
-    
+
     grunt.registerTask('default', ['replace', 'bower_concat', 'concat', 'minjson', 'uglify']);
     grunt.registerTask('static',  ['replace']);
     grunt.registerTask('scripts', ['concat:local', 'uglify:local']);
     grunt.registerTask('appdata', ['concat:appdata', 'minjson:appdata']);
     grunt.registerTask('server',  ['connect', 'watch']);
-    
+
 };

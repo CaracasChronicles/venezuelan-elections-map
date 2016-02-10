@@ -7,7 +7,7 @@ function Menu (config) {
             top: 20,
             bottom: 100,
             left: 100,
-            right: 100        
+            right: 100
         },
         width: 200,
         height: 25,
@@ -20,25 +20,25 @@ function Menu (config) {
 }
 
 Menu.prototype = {
-    
+
     constructor: Menu,
-    
+
     render: function() {
-    
+
         var self = this;
         if (self.control) self.control.remove();
-    
+
         var menu = this.container.append("g")
             .classed(self.config.classed || {menu:true})
             .attr("transform", function(d,i) {return "translate("+(Math.floor(self.config.margin.left)+0.5)+","+(Math.floor(self.config.margin.top)+0.5)+")"})
-        
+
         var option = menu.selectAll("g.option")
             .data(this.options)
           .enter().append("g")
             //.classed(function(d) {return {option:true, disabled:d.disabled && true}})
-            .classed({option:true, disabled:function(d) {return d.disabled}})
+            .classed({option:true, selected:function(d) {return d.selected}, disabled:function(d) {return d.disabled}})
             .attr("transform", function(d,i) {return "translate("+(self.config.span !== "horizontal" ? 0 : i*self.config.width)+","+(self.config.span === "horizontal" ? 0 : i*self.config.height)+")"})
-            
+
         option.append("rect")
             .attr("width", this.config.width)
             .attr("height", this.config.height)
@@ -46,6 +46,9 @@ Menu.prototype = {
                 if (d.disabled) return false;
                 menu.selectAll("g.option.selected").classed({selected:false});
                 d3.select(this.parentNode).classed({selected:true});
+                _.each(self.options, function(opt) {
+                    opt.selected = !!(d.id === opt.id);
+                });
                 _.isFunction(d.action) ? d.action.call(option, d) : null;
             });
 
@@ -53,7 +56,7 @@ Menu.prototype = {
             .attr("x", 10)
             .attr("y", self.config.text_yoffset)
             .text(function(d) {return d.name})
-            
+
         self.control = menu;
     }
 };
@@ -65,7 +68,7 @@ function ColorLegend (config) {
         intrapadding: 5,
         position: {
             top: 20,
-            left: 20 
+            left: 20
         },
         margin: {
             top: 10,
@@ -88,17 +91,17 @@ ColorLegend.prototype = {
         if (!scale) throw new Error("Scale is undefined or invalid");
         this.scale = scale;
     },
-    
+
     render: function() {
-        
+
         var self = this;
         if (self.control) self.control.remove();
-        
+
         var data = this.scale.range();
 
         var height = self.config.margin.top + (data.length * (self.config.swatch_size+self.config.intrapadding)) - self.config.intrapadding + (!_.isEmpty(self.config.extra) ? self.config.gap + self.config.extra.length * (self.config.swatch_size+self.config.intrapadding) : 0) + self.config.margin.bottom;
-        var width = self.config.margin.left + self.config.swatch_size + self.config.margin.right;        
-        
+        var width = self.config.margin.left + self.config.swatch_size + self.config.margin.right;
+
         var legend = this.container.append("g")
             .classed({"legend":true})
             .attr("transform", function(d,i) {
@@ -106,11 +109,11 @@ ColorLegend.prototype = {
                 var left = self.config.position.left ? self.config.position.left : self.container.attr("width") - width - self.config.position.right;
                 return "translate("+(left+0.5)+","+(top+0.5)+")";
             });
-        
+
         var legend_scale = d3.scale.linear()
             .domain([_.first(this.scale.domain()),_.last(this.scale.domain())])
             .range([(data.length * (self.config.swatch_size+self.config.intrapadding)) - self.config.intrapadding, 0])
-        
+
         // bg
         legend.append("rect")
             .attr("width", width)
@@ -121,7 +124,7 @@ ColorLegend.prototype = {
             .style("stroke-width", 0.5)
             .style("fill", "#ccc")
             .style("fill-opacity", 0.85)
-        
+
         var swatch = legend.selectAll("rect.swatch")
             .data(data)
           .enter().append("rect")
@@ -135,7 +138,7 @@ ColorLegend.prototype = {
             .style("fill", function(d) {return d})
             .style("stroke", "#555")
             .style("stroke-opacity", 0.7)
-            
+
         var extra = legend.selectAll("rect.extra")
             .data(self.config.extra)
           .enter().append("rect")
@@ -149,7 +152,7 @@ ColorLegend.prototype = {
             .style("fill", function(d) {return d[0]})
             .style("stroke", "#555")
             .style("stroke-opacity", 0.7)
-            
+
         legend.append("line")
             .attr("x1", self.config.margin.left+self.config.swatch_size+7)
             .attr("y1", Math.round(self.config.margin.top+(self.config.swatch_size/2)))
@@ -168,9 +171,9 @@ ColorLegend.prototype = {
             .attr("y2", function(d,i) {return Math.round(self.config.margin.top + (((data.length-1)-i) * (self.config.swatch_size+self.config.intrapadding)+(self.config.swatch_size/2)))})
             .style("stroke", "#555")
             .style("stroke-opacity", 0.4)
-          
+
         var scale_ticks = legend_scale.ticks(5);
-          
+
         legend.selectAll("line.tick2")
             .data(scale_ticks)
           .enter().append("line")
@@ -181,7 +184,7 @@ ColorLegend.prototype = {
             .attr("y2", function(d,i) {return Math.round(self.config.margin.top + Math.round(legend_scale(d)))})
             .style("stroke", "#555")
             .style("stroke-opacity", 0.4)
-            
+
         legend.selectAll("text.tick2")
             .data(scale_ticks)
           .enter().append("text")
@@ -189,7 +192,7 @@ ColorLegend.prototype = {
             .attr("x", self.config.margin.left+self.config.swatch_size+12)
             .attr("y", function(d,i) {return self.config.margin.top + legend_scale(d) + 3})
             .text(function(d) {return self.config.format(d)})
-            
+
         legend.selectAll("line.tick2.extra")
             .data(self.config.extra)
           .enter().append("line")
@@ -208,11 +211,11 @@ ColorLegend.prototype = {
             .attr("x", self.config.margin.left+self.config.swatch_size+12)
             .attr("y", function(d,i) {return self.config.margin.top + (data.length * (self.config.swatch_size+self.config.intrapadding)) + self.config.gap + (((self.config.extra.length-1)-i) * (self.config.swatch_size+self.config.intrapadding)) + 8})
             .text(function(d) {return d[1]})
-            
+
         self.control = legend;
-        
+
     },
-    
+
 };
 
 function Tooltip(config) {
@@ -243,16 +246,16 @@ function Tooltip(config) {
 Tooltip.prototype = {
 
     render: function(record) {
-    
+
         var self = this;
         this.remove();
-        
+
         var tooltip = this.container.append("g")
             .attr("id", this.id)
             .classed({tooltip:true})
             .attr("transform", function(d,i) {return "translate("+(self.x+0.5)+","+(self.y+0.5)+")"})
             .style("pointer-events", "none")
-            
+
         tooltip.append("rect")
             .attr("x", this.offset.x)
             .attr("y", this.offset.y)
@@ -262,9 +265,9 @@ Tooltip.prototype = {
             .attr("stroke-width", 1.0)
             .attr("stroke-opacity", 0.5)
             .style("fill", "#fff");
-            
+
         var svg_switch = tooltip.append("switch");
-        
+
         svg_switch.append("foreignObject")
             .attr("x", this.offset.x)
             .attr("y", this.offset.y)
@@ -274,9 +277,9 @@ Tooltip.prototype = {
             .html(this.template(record))
 
     },
-    
+
     remove: function() {
-        this.container.select("g#"+this.id).remove();    
+        this.container.select("g#"+this.id).remove();
     }
 
 };
