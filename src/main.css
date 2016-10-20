@@ -1,7 +1,7 @@
 html, body, #map-canvas, svg {
-    width: 100%; 
-    height: 100%; 
-    margin: 0; 
+    width: 100%;
+    height: 100%;
+    margin: 0;
     padding: 0;
 }
 
@@ -47,6 +47,46 @@ html, body, #map-canvas, svg {
     fill: black;
     font-family: sans-serif;
     font-size: 14px;
+    background-color: white;
+}
+
+/* Header */
+
+#header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding:5px;
+    background-color: white;
+    border-bottom: 5px solid #efaa20;
+}
+
+/* Timeline */
+
+.timeline {
+  pointer-events: none;
+  stroke: #aaaaaa;
+  stroke-width: 2px;
+}
+
+.choice .dot {
+  pointer-events: none;
+  stroke-width: 2px;
+}
+
+.choice text {
+  pointer-events: none;
+  text-anchor: start;
+  alignment-baseline: middle;
+  font-family: verdana;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.choice rect {
+  fill: rgba(255, 255, 255, 0.0);
+  cursor: pointer;
 }
 
 /* Election selector */

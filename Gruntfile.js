@@ -13,12 +13,20 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         copy: {
-            main: { // copy files in root folder
-                expand: true,
-                cwd: 'src/',
-                src: '*',
-                dest: 'dist/',
-                filter: 'isFile'
+            main: {
+                options: {
+                    noProcess: true
+                },
+                files: [
+                    // images
+                    {
+                        expand: true,
+                        cwd: 'src/img',
+                        src: '*',
+                        dest: 'dist/img',
+                        filter: 'isFile'
+                    }
+                ]
             }
         },
         replace: {
@@ -29,7 +37,7 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: [
-                    { // copy files in root folder
+                    { // copy files and replace setting vars
                         expand: true,
                         cwd: 'src/',
                         src: '*',
@@ -70,6 +78,7 @@ module.exports = function(grunt) {
                 src: [
                     'src/js/numeral.js',
                     'src/js/uitools.js',
+                    'src/js/timeline.js',
                     'src/js/index.js'
                 ],
                 dest: 'dist/local.js'
@@ -132,10 +141,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-bower-concat');
     grunt.loadNpmTasks('grunt-minjson');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-replace');
 
-    grunt.registerTask('default', ['replace', 'bower_concat', 'concat', 'minjson', 'uglify']);
-    grunt.registerTask('static',  ['replace']);
+    grunt.registerTask('default', ['copy', 'replace', 'bower_concat', 'concat', 'minjson', 'uglify']);
+    grunt.registerTask('static',  ['copy', 'replace']);
     grunt.registerTask('scripts', ['concat:local', 'uglify:local']);
     grunt.registerTask('appdata', ['concat:appdata', 'minjson:appdata']);
     grunt.registerTask('server',  ['connect', 'watch']);

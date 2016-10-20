@@ -9,6 +9,7 @@ var div_selector;
 var legend;
 
 // state vars
+var election_options = null;
 var selected_election = null;
 var selected_sub = null;
 var selected_div = null;
@@ -17,17 +18,12 @@ var app_options = {
     opacity: 0.75  // Opacity of the colored polygons
 };
 
-google.maps.event.addDomListener(window, 'load', function() {
+var sidebar_width = 260;
 
-    // title background
-    d3.select("#top-glass").insert("rect", "#title-text-1")
-        .attr("id", "title-bg")
-        .attr("x", 10.5)
-        .attr("y", 10.5)
-        .attr("rx", 2)
-        .attr("ry", 2)
-        .attr("width", function() {return d3.select("#title-text-1").node().getBBox().width + 22})
-        .attr("height", 58)
+var topglass;
+var tooltip;
+
+google.maps.event.addDomListener(window, 'load', function() {
 
     // on resize, adjust SVG dimensions and reposition/resize some overlays
     var on_resize = function() {
@@ -37,9 +33,7 @@ google.maps.event.addDomListener(window, 'load', function() {
             .attr("height", vport[1]);
         if (legend) legend.render(); // legend
         // description
-        var width = Math.round(d3.select("#title-bg").attr("width") - 10);
-        d3.select("#description").attr("style", "top:450px;left:10px;width:" + width + "px;height:" + Math.max(vport[1] - 500,0) + "px;");
-        d3.select("#source").attr("style", "top:" + Math.max(vport[1] - 54,0) + "px;left:10px;width:" + width + "px;height:10px;");
+        d3.select("#description").attr("style", "top:100px;left:5px;width:" + (sidebar_width - 10) + "px;height:" + Math.max(vport[1] - 160,0) + "px;");
     };
 
     d3.select(window).on('resize', on_resize);
@@ -107,9 +101,7 @@ google.maps.event.addDomListener(window, 'load', function() {
 
         overlays: ['data', 'map', function(cb) {
 
-            var topglass = d3.select("#top-glass");
-
-            var tooltip;
+            topglass = d3.select("#top-glass");
 
             function show_tooltip(event) {
                 if (!event || !event.feature) return;
@@ -188,31 +180,18 @@ google.maps.event.addDomListener(window, 'load', function() {
 
             // set up D3 widgets
 
-            // election menu
-            election_selector = new Menu({
-                classed: {menu: 1, elecsel: 1},
-                span: "vertical",
-                options: _.map(appdata.elections, function(val, key) {
-                    return {
-                        id: key,
-                        name: val.label,
-                        desc: val.desc,
-                        maps: val.maps,
-                        scale_type: val.scale_type,
-                        action: load_election,
-                        disabled: val.disabled,
-                        subs: val.subs,
-                        selected: val.selected
-                    };
-                }),
-                margin: {
-                    top: 89,
-                    bottom: 100,
-                    left: 10,
-                    right: 100
-                },
-                container: topglass,
-                width: Math.round(d3.select("#title-bg").attr("width"))
+            election_options = _.map(appdata.elections, function(val, key) {
+                return {
+                    id: key,
+                    name: val.label,
+                    desc: val.desc,
+                    maps: val.maps,
+                    scale_type: val.scale_type,
+                    action: load_election,
+                    disabled: val.disabled,
+                    subs: val.subs,
+                    selected: val.selected
+                };
             });
 
             // map subdivision menu
@@ -226,11 +205,11 @@ google.maps.event.addDomListener(window, 'load', function() {
                     {id: "circuitos", name: "CIRCUIT", action: load_div}
                 ],
                 margin: {
-                    top: 68,
-                    left: 10
+                    top: 20,
+                    left: 5
                 },
                 container: topglass,
-                width: d3.select("#title-bg").attr("width") / 4,
+                width: sidebar_width / 4,
                 height: 15,
                 text_yoffset: 11
             });
@@ -239,8 +218,8 @@ google.maps.event.addDomListener(window, 'load', function() {
                 swatch_size: 10,
                 intrapadding: 3,
                 position: {
-                    top: 15,
-                    right: 110
+                    top: 35,
+                    right: 40
                 },
                 margin: {
                     top: 15,
@@ -255,123 +234,13 @@ google.maps.event.addDomListener(window, 'load', function() {
                 format: function(val) {return Math.round(val * 100) + "%"},
             });
 
-            ///////////////////////////////////////////////////////////////////////////////////////////
-
-            // called when a subdivision type is selected
-            function load_div(option) {
-
-                selected_div = option;
-                var div_id = option.id;
-
-                // remove all features currently on map
-                map.data.forEach(function(feat) {
-                    map.data.remove(feat);
-                });
-
-                map.data.addGeoJson(appdata[div_id]);
-                if (selected_election) load_election(selected_election);
-            }
-
-            // called when an election is selected
-            function load_election(option) {
-
-                selected_election = option;
-                var elec_id = option.id;
-                var quit = false;
-
-                // update map selector
-                _.each(div_selector.options, function(div) {
-                    div.disabled = !!(selected_election.maps.indexOf(div.id) === -1);
-                    if (selected_div.id === div.id && div.disabled) {
-                        _.each(div_selector.options, function(opt) {
-                            opt.selected = false;
-                        });
-                        _.first(div_selector.options).selected = true;
-                        load_div(_.first(div_selector.options));
-                        quit = true;
-                    }
-                });
-                if (quit) return;
-
-                div_selector.render();
-
-                // disable nominal/lista suboptions for circuitos
-                if (selected_election.subs && selected_div.id !== 'circuitos') {
-                    if (!selected_sub) {
-                        selected_sub = _.first(selected_election.subs);
-                        load_voting_system(selected_sub[1]);
-                        return;
-                    }
-                } else {
-                    selected_sub = null;
-                }
-
-                var color_scale;
-                if (option.scale_type == 'sequential') {
-                    // Sequential color scale - http://colorbrewer2.org/?type=sequential&scheme=BuGn&n=9
-                    var color_range = ["#F7FCFD", "#E5F5F9", "#CCECE6", "#99D8C9", "#66C2A4", "#41AE76", "#238B45", "#006D2C", "#00441B"];
-                    color_scale = d3.scale.linear()
-                        .domain(color_range.map(function(e, i) {return i / (color_range.length - 1)}))
-                        .range(color_range)
-                        .clamp(true);
-                } else { // assume diverging color scale
-                    // Diverging color scale - http://colorbrewer2.org/?type=diverging&scheme=RdBu&n=10
-                    var color_range = ["#053061", "#2166ac", "#4393c3", "#92c5de", "#d1e5f0", "#fddbc7", "#f4a582", "#d6604d", "#b2182b", "#67001f"];
-                    color_scale = d3.scale.linear()
-                        .domain(color_range.map(function(e, i) {return i / (color_range.length - 1)}))
-                        .range(color_range)
-                        .clamp(true);
-                }
-
-                map.data.forEach(function(feat) {
-                    //var id = feat.getId();
-                    var val = feat.getProperty(elec_id + "_c" + (selected_sub ? selected_sub[1] : ''));
-                    if (val && val !== 0) {
-                        feat.setProperty('color', color_scale(val));
-                    } else {
-                        feat.setProperty('color', '#666');
-                    }
-                });
-
-                // update legend
-                legend.set_scale(color_scale);
-                legend.render();
-
-                // update description
-                $('#description').text('');
-                if (option.subs && selected_div.id !== 'circuitos') {
-                    var sel = $('<select>');
-                    _.each(option.subs, function(sub) {
-                        var opt = $('<option>').text(sub[0]).val(sub[1]);
-                        sel.append(opt);
-                    });
-                    sel.val(selected_sub);
-                    sel.on('change', function() {
-                        load_voting_system(sel.val());
-                    });
-                    $('#description').append('<span>Use electoral system:</span><br>').append(sel).append('<br><br>');
-                }
-                $('<div>').html(option.desc).appendTo('#description');
-            }
-
-            // called when voting system dropdown is changed, where applicable
-            function load_voting_system(suffix) {
-
-                if (!_.isArray(selected_election.subs)) return;
-
-                selected_sub = _.find(selected_election.subs, function(sub) {
-                    return sub[1] === suffix;
-                });
-
-                load_election(selected_election);
-            }
-
-            election_selector.render();
             div_selector.render();
 
-            // auto-load first menu option
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+            // auto-load default options
             load_div(div_selector.options[0]);
-            load_election(election_selector.options[election_selector.options.length - 1]);
+            load_election(election_options[election_options.length - 1]);
 
         }]
 
@@ -380,3 +249,112 @@ google.maps.event.addDomListener(window, 'load', function() {
     });
 
 });
+
+// called when an election is selected
+function load_election(option) {
+
+    selected_election = option;
+    var elec_id = option.id;
+    var quit = false;
+
+    // update map selector
+    _.each(div_selector.options, function(div) {
+        div.disabled = !!(selected_election.maps.indexOf(div.id) === -1);
+        if (selected_div.id === div.id && div.disabled) {
+            _.each(div_selector.options, function(opt) {
+                opt.selected = false;
+            });
+            _.first(div_selector.options).selected = true;
+            load_div(_.first(div_selector.options));
+            quit = true;
+        }
+    });
+    if (quit) return;
+
+    div_selector.render();
+
+    // disable nominal/lista suboptions for circuitos
+    if (selected_election.subs && selected_div.id !== 'circuitos') {
+        if (!selected_sub) {
+            selected_sub = _.first(selected_election.subs);
+            load_voting_system(selected_sub[1]);
+            return;
+        }
+    } else {
+        selected_sub = null;
+    }
+
+    var color_scale;
+    if (option.scale_type == 'sequential') {
+        // Sequential color scale - http://colorbrewer2.org/?type=sequential&scheme=BuGn&n=9
+        var color_range = ["#F7FCFD", "#E5F5F9", "#CCECE6", "#99D8C9", "#66C2A4", "#41AE76", "#238B45", "#006D2C", "#00441B"];
+        color_scale = d3.scale.linear()
+            .domain(color_range.map(function(e, i) {return i / (color_range.length - 1)}))
+            .range(color_range)
+            .clamp(true);
+    } else { // assume diverging color scale
+        // Diverging color scale - http://colorbrewer2.org/?type=diverging&scheme=RdBu&n=10
+        var color_range = ["#053061", "#2166ac", "#4393c3", "#92c5de", "#d1e5f0", "#fddbc7", "#f4a582", "#d6604d", "#b2182b", "#67001f"];
+        color_scale = d3.scale.linear()
+            .domain(color_range.map(function(e, i) {return i / (color_range.length - 1)}))
+            .range(color_range)
+            .clamp(true);
+    }
+
+    map.data.forEach(function(feat) {
+        //var id = feat.getId();
+        var val = feat.getProperty(elec_id + "_c" + (selected_sub ? selected_sub[1] : ''));
+        if (val && val !== 0) {
+            feat.setProperty('color', color_scale(val));
+        } else {
+            feat.setProperty('color', '#666');
+        }
+    });
+
+    // update legend
+    legend.set_scale(color_scale);
+    legend.render();
+
+    // update description
+    $('#description').text('');
+    if (option.subs && selected_div.id !== 'circuitos') {
+        var sel = $('<select>');
+        _.each(option.subs, function(sub) {
+            var opt = $('<option>').text(sub[0]).val(sub[1]);
+            sel.append(opt);
+        });
+        sel.val(selected_sub);
+        sel.on('change', function() {
+            load_voting_system(sel.val());
+        });
+        $('#description').append('<span>Use electoral system:</span><br>').append(sel).append('<br><br>');
+    }
+    $('<div>').html(option.desc).appendTo('#description');
+}
+
+// called when a subdivision type is selected
+function load_div(option) {
+
+    selected_div = option;
+    var div_id = option.id;
+
+    // remove all features currently on map
+    map.data.forEach(function(feat) {
+        map.data.remove(feat);
+    });
+
+    map.data.addGeoJson(appdata[div_id]);
+    if (selected_election) load_election(selected_election);
+}
+
+// called when voting system dropdown is changed, where applicable
+function load_voting_system(suffix) {
+
+    if (!_.isArray(selected_election.subs)) return;
+
+    selected_sub = _.find(selected_election.subs, function(sub) {
+        return sub[1] === suffix;
+    });
+
+    load_election(selected_election);
+}
