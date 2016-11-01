@@ -33,7 +33,7 @@ google.maps.event.addDomListener(window, 'load', function() {
             .attr("height", vport[1]);
         if (legend) legend.render(); // legend
         // description
-        d3.select("#description").attr("style", "top:100px;left:5px;width:" + (sidebar_width - 10) + "px;height:" + Math.max(vport[1] - 160,0) + "px;");
+        d3.select("#description").attr("style", "top:100px;left:5px;width:" + (sidebar_width - 10) + "px;height:" + Math.max(vport[1] - 150,0) + "px;");
     };
 
     d3.select(window).on('resize', on_resize);

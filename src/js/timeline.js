@@ -1,5 +1,5 @@
 var settings = {
-  width: 800,
+  width: 400,
   height: 100,
 
   top_margin: 23,
@@ -85,10 +85,7 @@ var svg, dotnav, timeline;
 
 $(function() {
 
-  svg = d3.select('#header').append('svg')
-    .style('position', 'absolute')
-    .attr('width', settings.width)
-    .attr('height', settings.height);
+  svg = d3.select('#timeline-nav').append('svg');
 
   dotnav = svg.append('g')
     .attr('transform', 'translate(0,' + (settings.top_margin) + ')');
